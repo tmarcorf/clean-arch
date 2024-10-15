@@ -6,6 +6,8 @@ namespace CleanArchMvc.Domain.Interfaces
     {
         Task<IEnumerable<Product>> GetProductsAsync();
 
+        Task<Product> GetProductCategoryAsync(int? id);
+
         Task<Product> GetBydIdAsync(int? id);
 
         Task<Product> CreateAsync(Product product);
