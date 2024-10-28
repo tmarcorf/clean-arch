@@ -28,7 +28,9 @@ namespace CleanArchMvc.Infra.IoC
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddAutoMapper(typeof(DomainToDTOMappingProfile), typeof(DTOToCommandMappingProfile));
+            services.AddAutoMapper(
+                typeof(DomainToDTOMappingProfile), 
+                typeof(DTOToCommandMappingProfile));
 
             var assemblyHandlers = AppDomain.CurrentDomain.Load("CleanArchMvc.Application");
 
