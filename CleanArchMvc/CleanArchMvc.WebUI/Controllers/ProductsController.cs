@@ -47,17 +47,15 @@ namespace CleanArchMvc.WebUI.Controllers
             return View(productDto);
         }
 
-        [HttpGet]
+        [HttpGet()]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
-
             var productDto = await _productService.GetById(id);
 
             if (productDto == null) return NotFound();
 
             var categories = await _categoryService.GetCategories();
-
             ViewBag.CategoryId = new SelectList(categories, "Id", "Name", productDto.CategoryId);
 
             return View(productDto);
@@ -99,15 +97,13 @@ namespace CleanArchMvc.WebUI.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
-
             var productDto = await _productService.GetById(id);
 
             if (productDto == null) return NotFound();
-
             var wwwroot = _environment.WebRootPath;
             var image = Path.Combine(wwwroot, "images\\" + productDto.Image);
             var exists = System.IO.File.Exists(image);
-            ViewBag.ImageExists = exists;
+            ViewBag.ImageExist = exists;
 
             return View(productDto);
         }
