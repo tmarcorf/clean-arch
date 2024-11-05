@@ -4,40 +4,33 @@ using CleanArchMvc.Application.Services;
 using CleanArchMvc.Domain.Interfaces;
 using CleanArchMvc.Infra.Data.Context;
 using CleanArchMvc.Infra.Data.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace CleanArchMvc.Infra.IoC
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfraestructure(
-            this IServiceCollection services, 
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services,
             IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
-            });
+             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"
+            ), b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddAutoMapper(
-                typeof(DomainToDTOMappingProfile), 
-                typeof(DTOToCommandMappingProfile));
 
-            var assemblyHandlers = AppDomain.CurrentDomain.Load("CleanArchMvc.Application");
+            services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
-            services.AddMediatR(x =>
-            {
-                x.RegisterServicesFromAssembly(assemblyHandlers);
-            });
+            var myhandlers = AppDomain.CurrentDomain.Load("CleanArchMvc.Application");
+            services.AddMediatR(myhandlers);
 
             return services;
         }

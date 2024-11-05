@@ -2,7 +2,7 @@
 
 <h2>Register new Product</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create">
 
     <div class="form-horizontal">
 
@@ -54,7 +54,7 @@
         <div class="form-group">
             <label asp-for="CategoryId" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"> </select>
+               <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"> </select>                
             </div>
         </div>
 
