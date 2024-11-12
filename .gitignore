@@ -3,3 +3,4 @@ bin/
 .vs/
 Migrations/
 .idea/
+*.user
