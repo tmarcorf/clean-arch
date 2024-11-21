@@ -37,8 +37,11 @@ namespace CleanArchMvc.Infra.IoC
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
-            var myhandlers = AppDomain.CurrentDomain.Load("CleanArchMvc.Application");
-            services.AddMediatR(myhandlers);
+            var myHandlers = AppDomain.CurrentDomain.Load("CleanArchMvc.Application");
+            services.AddMediatR(options =>
+            {
+                options.RegisterServicesFromAssembly(myHandlers);
+            });
 
             return services;
         }
